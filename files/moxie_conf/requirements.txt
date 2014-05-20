@@ -1,0 +1,11 @@
+git+https://github.com/ox-it/moxie-courses.git#egg=moxie_courses
+git+https://github.com/ox-it/moxie-library.git#egg=moxie_library
+git+https://github.com/ox-it/moxie-oxford-dates.git#egg=moxie_oxford_dates
+git+https://github.com/ox-it/moxie-contacts.git#egg=moxie_contacts
+git+https://github.com/ox-it/moxie-river-status.git#egg=moxie_river_status
+git+https://github.com/ox-it/moxie-weather.git#egg=moxie_weather
+git+https://github.com/ox-it/moxie-webcams.git#egg=moxie_webcams
+git+https://github.com/ox-it/moxie-events.git#egg=moxie_events
+git+https://github.com/ox-it/moxie-feedback.git#egg=moxie_feedback
+git+https://github.com/ox-it/moxie-notifications.git#egg=moxie_notifications
+psycopg2>=2.5.2

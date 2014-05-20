@@ -1,0 +1,15 @@
+<elevate>
+ <query text="it services">
+  <doc id="oxpoints:31337175" /> <!-- department IT Services -->
+  <doc id="oxpoints:40002001" /> <!-- 7-19 Banbury Road -->
+  <doc id="oxpoints:23233672" /> <!-- HBS -->
+  <doc id="oxpoints:23233619" /> <!-- BBC -->
+ </query>
+
+ <query text="g&amp;d">
+     <doc id="osm:553028844" /> <!-- George and Danver -->
+     <doc id="osm:465460531" /> <!-- George and Davis -->
+     <doc id="osm:504753150" /> <!-- George and Delila -->
+ </query>
+
+</elevate>

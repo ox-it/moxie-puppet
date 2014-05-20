@@ -1,0 +1,31 @@
+<configuration>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file><%= @local_log_dir %>/jetty.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern><%= @local_log_dir %>/jetty.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 10 days' worth of history -->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <% if @syslog != '' %>
+    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost><%= @syslog %></syslogHost>
+        <port>514</port>
+        <facility>LOCAL0</facility>
+        <suffixPattern>[%thread] %logger %msg</suffixPattern>
+    </appender>
+    <% end %>
+
+    <root level="info">
+    <% if @syslog != '' %>
+        <appender-ref ref="SYSLOG"/>
+    <% end %>
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

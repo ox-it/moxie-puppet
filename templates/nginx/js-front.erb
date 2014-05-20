@@ -1,0 +1,50 @@
+upstream app_js {
+<% @app_servers.each do |val| -%>
+     server <%= val %>;
+<% end -%>
+}
+
+server {
+    listen 80;
+    server_name <%= @hostname %>;
+    access_log /var/log/nginx/js_front.access.log;
+    error_log /var/log/nginx/js_front.error.log;
+
+    root /srv/moxie/moxie-front;
+
+    gzip on;
+    gzip_comp_level 9;
+    gzip_proxied any;
+    gzip_vary on;
+    gzip_static on;
+    gzip_types text/css application/json application/x-javascript text/javascript;
+
+    # serves main HTML page
+    location / {
+        expires 1h;
+        add_header Cache-Control must-revalidate;
+    }
+
+    # serves JS files
+    location /app {
+        expires 1y;
+    }
+
+    location /css {
+        expires 1y;
+    }
+
+    location /images {
+        expires 1y;
+    }
+
+    location /api {
+        gzip_static off;
+        access_log /var/log/nginx/mox_api.access.log;
+        error_log /var/log/nginx/mox_api.error.log;
+        rewrite  ^/api/(.*)$  /$1  break;
+        uwsgi_pass app_js;
+        include uwsgi_params;
+    }
+
+}

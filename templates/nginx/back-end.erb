@@ -1,0 +1,38 @@
+# Custom log format to expose the upstream_response_time (http://lincolnloop.com/blog/2010/nov/9/tracking-application-response-time-nginx/)
+log_format timed_combined_<%= @hostname %> '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_time $upstream_response_time $pipe';
+
+upstream app_<%= @hostname %> {
+<% @app_servers.each do |val| -%>
+     server <%= val %>;
+<% end -%>
+}
+
+server {
+    listen 80;
+    server_name <%= @hostname %>;
+    access_log /var/log/nginx/back_end.access.log timed_combined_<%= @hostname %>;
+    error_log /var/log/nginx/back_end.error.log;
+
+    gzip on;
+    gzip_comp_level 9;
+    gzip_types application/json;
+    gzip_proxied any;
+    gzip_vary on;
+
+    error_page 502 504  /api-not-available.json;
+
+    location / {
+        uwsgi_pass app_<%= @hostname %>;
+        include uwsgi_params;
+    }
+    
+    location /api-not-available.json {
+        root /srv/<%= @user %>;
+    }
+    
+    location /browser {
+        alias /srv/<%= @user %>/hal-browser/;
+        index  browser.html;
+        expires 10d;
+    }
+}

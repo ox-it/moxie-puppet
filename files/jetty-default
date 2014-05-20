@@ -1,0 +1,9 @@
+NO_START=0
+
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386
+
+JETTY_USER=jetty
+JETTY_HOME=/srv/jetty/server
+JAVA_OPTIONS="-Dsolr.solr.home=/srv/solr/moxie $JAVA_OPTIONS"
+JETTY_ARGS="jetty.port=8080"
+JETTY_LOGS=logs
